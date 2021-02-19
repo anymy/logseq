@@ -2,7 +2,8 @@
 title: Sync Script
 ---
 
-## ```sh
+##
+```sh
 LOGSEQ_PATH="/Users/manfredsteiner/Documents/LogSeq"
 LOGSEQ_REPO="https://github.com/anymy/logseq"
 cd "$LOGSEQ_PATH"
@@ -15,3 +16,4 @@ git pull "$LOGSEQ_REPO" main
 git add .
 git commit -q -m "Last Sync: $(date +"%Y-%m-%d %H:%M:%S")"
 git push --set-upstream origin main -q
+```
