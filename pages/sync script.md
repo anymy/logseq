@@ -5,11 +5,7 @@ title: Sync Script
 ## ```sh
 LOGSEQ_PATH="/Users/manfredsteiner/Documents/LogSeq"
 LOGSEQ_REPO="https://github.com/anymy/logseq"
-
 cd "$LOGSEQ_PATH"
-
-ls -al
-
 git pull "$LOGSEQ_REPO" main
 
 CHANGES_EXIST="$(git status --porcelain | wc -l)"
