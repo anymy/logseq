@@ -1,0 +1,93 @@
+{
+  "main": {
+    "id": "a71c0429c8886164",
+    "type": "split",
+    "children": [
+      {
+        "id": "a522a513a518734a",
+        "type": "leaf",
+        "active": true,
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "journals/2021_02_16.md",
+            "mode": "source"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "451208ae7dd20811",
+    "type": "split",
+    "children": [
+      {
+        "id": "6b9083cf2b76883c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ca981eeaa22da48c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "7202856b5ec19a5e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "49cbfcb50409bf87",
+    "type": "split",
+    "children": [
+      {
+        "id": "229bca902e010fdc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "06a4dbfae1caa92f",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "journals/2021_02_16.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "lastOpenFiles": [
+    "journals/2021_02_16.md",
+    "journals/2021_02_15.md",
+    "pages/obsidian.md"
+  ]
+}
