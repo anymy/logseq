@@ -2,7 +2,8 @@
 title: Sync Script
 ---
 
-## LOGSEQ_PATH="/Users/manfredsteiner/Documents/LogSeq"
+## '
+LOGSEQ_PATH="/Users/manfredsteiner/Documents/LogSeq"
 LOGSEQ_REPO="https://github.com/anymy/logseq"
 
 cd "$LOGSEQ_PATH"
