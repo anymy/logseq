@@ -13,5 +13,4 @@ if [ "$CHANGES_EXIST" -eq 0 ]; then
 fi
 git pull "$LOGSEQ_REPO" main
 git add .
-git commit -q -m "Last Sync: $(date +"%Y-%m-%d %H:%M:%S")"
-# git push --set-upstream origin main -q```
+git commit -q -m "Last Sync: $(date +"%Y-%m-%d %H:%M:%S")" git push --set-upstream origin main -q```
