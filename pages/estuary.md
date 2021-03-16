@@ -6,5 +6,5 @@ title: Estuary
 >An _estuary_ is a partially enclosed coastal body of brackish water with one or more rivers or streams flowing into it, and with a free connection to the open sea. Estuaries_ form a transition zone between river environments and maritime environments known as ecotone.
 ## How an Estuary looks like:
 
-![Estuary](https://upload.wikimedia.org/wikipedia/commons/b/b2/Estuary-mouth.jpg?1615739628489)
+![Estuary Image](https://upload.wikimedia.org/wikipedia/commons/b/b2/Estuary-mouth.jpg?1615739628489){:height 214, :width 508}
 ## The mixing of seawater and freshwater provides high levels of nutrients and makes estuaries to very productive natural habitats.
