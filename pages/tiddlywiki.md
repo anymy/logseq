@@ -7,3 +7,5 @@ title: TiddlyWiki
 ### [[TiddlyResearch]]
 ### [[Stroll]]
 ### [[Drift]]
+### [[Kristal]]
+### [[Streams]]
