@@ -9,6 +9,7 @@ title: TiddlyWiki
 ### [[Drift]]
 ### [[Kristal]]
 ### [[Streams]]
+### [[TiddlyJam]]
 ## Extensions
 ### [[TiddlyMap]]
 ### [[Viz]]
