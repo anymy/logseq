@@ -630,7 +630,12 @@ module.exports = {
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 ```
-##### add to
+##### add to *pages/_app.js*
+######
+```javascript
+import "../styles/tailwind.css";
+```
+######
  dependencies
 yarn add -D gray-matter tailwindcss postcss-import autoprefixer`
 yarn add react-markdown
