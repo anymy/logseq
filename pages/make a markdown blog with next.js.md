@@ -516,6 +516,25 @@ export default function Layout({ children }) {
   );
 }
 ```
+#### add layout to *pages/index.js*
+##### 
+```javascript
+...
+import Layout from "../components/layout";
+
+export default function Home({ posts }) {
+  return (
+    <Layout>
+       {posts.map(({ frontmatter: { title, description, date } }) => (
+        <article key={title}>
+          ...
+        </article>
+      ))}
+    </Layout>
+  );
+}
+```
+##### ![image.png](../assets/pages_make a markdown blog with next.js_1616663713368_0.png){:width 400}
 ####
 
 ilwindcss/utilities";
