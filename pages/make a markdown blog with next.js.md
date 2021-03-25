@@ -376,8 +376,143 @@ export async function getStaticProps({ params: { slug } }) {
   };
 }
 ```
-###
-### ![image.png](../assets/pages_make a markdown blog with next.js_1616689357717_0.png)
+### modify *pages/index.js* to add links
+### 
+```javascript
+// ...
+import Link from "next/link";
+
+export default function Home({ posts }) {
+  return (
+    <Layout>
+      {posts.map(({ frontmatter: { title, description, date }, slug }) => (
+        <article key={slug}>
+          <header>
+            <h3 className="mb-2">
+              <Link href={"/post/[slug]"} as={`/post/${slug}`}>
+                <a className="text-3xl font-semibold text-orange-600 no-underline">
+                  {title}
+                </a>
+              </Link>
+            </h3>
+            <span className="mb-4 text-xs">{date}</span>
+          </header>
+          <section>
+            <p className="mb-8">{description}</p>
+          </section>
+        </article>
+      ))}
+    </Layout>
+  );
+}
+```
+### ![image.png](../assets/pages_make a markdown blog with next.js_1616689357717_0.png){:height 165, :width 604}
+### Styling markdown with *Typography.js*
+#### `yarn add typography react-typography`
+####
+```shell
+yarn add v1.22.10
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+warning " > react-markdown@5.0.3" has unmet peer dependency "@types/react@>=16".
+warning " > react-typography@0.16.19" has incorrect peer dependency "react@^0.14.0 || ^15.0.0 || ^16.0.0".
+[4/4] 🔨  Building fresh packages...
+success Saved lockfile.
+success Saved 10 new dependencies.
+info Direct dependencies
+├─ react-typography@0.16.19
+└─ typography@0.16.19
+info All dependencies
+...
+✨  Done in 7.07s.
+```
+#### Install theme and fonts
+#### `yarn add typography-theme-sutro typeface-merriweather typeface-open-sans`
+####
+```shell
+yarn add v1.22.10
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+warning " > react-markdown@5.0.3" has unmet peer dependency "@types/react@>=16".
+warning " > react-typography@0.16.19" has incorrect peer dependency "react@^0.14.0 || ^15.0.0 || ^16.0.0".
+[4/4] 🔨  Building fresh packages...
+success Saved lockfile.
+success Saved 4 new dependencies.
+info Direct dependencies
+├─ typeface-merriweather@1.1.13
+├─ typeface-open-sans@1.1.13
+└─ typography-theme-sutro@0.16.19
+info All dependencies
+...
+✨  Done in 7.08s.
+
+```
+#### create a typography configuration in *utils/typography.js*
+####
+```javascript
+import Typography from "typography";
+import SutroTheme from "typography-theme-sutro";
+
+delete SutroTheme.googleFonts;
+
+SutroTheme.overrideThemeStyles = ({ rhythm }, options) => ({
+  "h1,h2,h3,h4,h5,h6": {
+    marginTop: rhythm(1 / 2),
+  },
+  h1: {
+    fontWeight: 900,
+    letterSpacing: "-1px",
+  },
+});
+SutroTheme.scaleRatio = 5 / 2;
+
+// Hot reload typography in development.
+if (process.env.NODE_ENV !== `production`) {
+  typography.injectStyles();
+}
+
+export default typography;
+```
+#### create **pages/_document.js* to inject our typography styles
+####
+```javascript
+import Document, { Head, Main, NextScript } from "next/document";
+import { TypographyStyle } from "react-typography";
+import typography from "../utils/typography";
+
+export default class MyDocument extends Document {
+  render() {
+    return (
+      <html>
+        <Head>
+          <TypographyStyle typography={typography} />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </html>
+    );
+  }
+}
+```
+#### import the typeface font into *pages/_app.js* by adding this line:
+####
+```javascript
+// ...
+import "typeface-lato";
+// ...
+```
+#### Typography.js includes a CSS normalization that collides with tailwind's. Therefore disables tailwind's normalization in *tailwind.config.js**
+####
+```javascript
+corePlugins: {
+    preflight: false,
+  },
+```
+####
 ---
 title: make a markdown blog with
 ### Create a next.js project:
