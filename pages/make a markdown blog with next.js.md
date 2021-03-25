@@ -138,10 +138,185 @@ info All dependencies
 @tailwind utilities;
 ```
 #### add the stylesheet to *pages/_app.js* and remove the default sheets
-#### 
+####
 ```javascript
 import @styles/tailwind.css
 ```
+#### create a *jsconfig.json* file for some shortcuts
+#### 
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@utils/*": ["utils/*"],
+      "@assets/*": ["assets/*"],
+      "@styles/*": ["styles/*"],
+      "@config/*": ["config/*"]
+    }
+  }
+}
+```
+#### ![image.png](../assets/pages_make a markdown blog with next.js_1616686575113_0.png)
+### create posts in *content/posts*
+#### post
+####
+```markdown
+---
+title: First post
+description: The first post is the most memorable one.
+date: 2020-04-16
+---
+
+# h1
+## h2
+### h3
+
+Normal text
+```
+### modify default *pages/index.js* to show our posts
+###
+```javascript
+import fs from "fs";
+import matter from "gray-matter";
+
+export default function Home({ posts }) {
+  return (
+    <div>
+       {posts.map(({ frontmatter: { title, description, date } }) => (
+        <article key={title}>
+          <header>
+            <h3>{title}</h3>
+            <span>{date}</span>
+          </header>
+          <section>
+            <p>{description}</p>
+          </section>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+export async function getStaticProps() {
+  const files = fs.readdirSync(`${process.cwd()}/content/posts`);
+
+  const posts = files.map((filename) => {
+    const markdownWithMetadata = fs
+      .readFileSync(`content/posts/${filename}`)
+      .toString();
+
+    const { data } = matter(markdownWithMetadata);
+
+    // Convert post date to format: Month day, Year
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = data.date.toLocaleDateString("en-US", options);
+
+    const frontmatter = {
+      ...data,
+      date: formattedDate,
+    };
+
+    return {
+      slug: filename.replace(".md", ""),
+      frontmatter,
+    };
+  });
+
+  return {
+    props: {
+      posts,
+    },
+  };
+}
+```
+### ![image.png](../assets/pages_make a markdown blog with next.js_1616687186189_0.png)
+### adding a Layout component *components/layout.js*
+###
+```javascript
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+export default function Layout({ children }) {
+  const { pathname } = useRouter();
+  const isRoot = pathname === "/";
+
+  const header = isRoot ? (
+    <h1 className="mb-8">
+      <Link href="/">
+        <a className="text-6xl font-black text-black no-underline">
+          Next.Js Starter Blog
+        </a>
+      </Link>
+    </h1>
+  ) : (
+    <h1 className="mb-2">
+      <Link href="/">
+        <a className="text-2xl font-black text-black no-underline">
+          Next.Js Starter Blog
+        </a>
+      </Link>
+    </h1>
+  );
+
+  return (
+    <div className="max-w-screen-sm px-4 py-8 mx-auto">
+      <header>{header}</header>
+      <main>{children}</main>
+      <footer>
+        © {new Date().getFullYear()}, Built with{" "}
+        <a href="https://nextjs.org/">Next.js</a> &#128293;
+      </footer>
+    </div>
+  );
+}
+```
+### add the layout to *pages/index.js*
+### 
+```javascript
+//...
+import Layout from "@components/layout";
+//..
+export default function Home({ posts }) {
+  return (
+    <Layout>
+      {posts.map(({ frontmatter: { title, description, date }, slug }) => (
+        <article key={slug}>
+ //..
+        </article>
+      ))}
+    </Layout>
+  );
+}
+
+//..
+```
+### ![image.png](../assets/pages_make a markdown blog with next.js_1616687812886_0.png)
+### Styling the blog index
+###
+```javascript
+export default function Home({ posts }) {
+  return (
+    <Layout>
+      {posts.map(({ frontmatter: { title, description, date } }) => (
+        <article key={title}>
+          <header>
+            <h3 className="mb-1 text-3xl font-semibold text-orange-600">
+              {title}
+            </h3>
+            <span className="mb-4 text-sm">{date}</span>
+          </header>
+          <section>
+            <p className="mb-8">{description}</p>
+          </section>
+        </article>
+      ))}
+    </Layout>
+  );
+}
+```
+###
 ---
 title: make a markdown blog with
 ### Create a next.js project:
