@@ -403,8 +403,24 @@ import "../styles/tailwind.css";
 ##### ![image.png](../assets/pages_make a markdown blog with next.js_1616630022845_0.png){:height 150, :width 560}
 ##### The styling changed!
 ### Blog logic
+#### Blog posts in *content/posts*
+##### *first-post.md*
+###### 
+```markdown
+---
+title: First post
+description: The first post is the most memorable one.
+date: 2020-04-16
+---
+
+# h1
+## h2
+### h3
+
+Normal text
+```
 #### index.js with logic to show posts:
-##### 
+#####
 ```javascript
 import fs from "fs";
 import matter from "gray-matter";
@@ -459,6 +475,48 @@ export async function getStaticProps() {
   };
 }
  ```
+### Styling
+#### Layout in *components/layout.js*:
+#####
+```javascript
+import Link from "next/link";
+import { useRouter } from "next/router";
+
+export default function Layout({ children }) {
+  const { pathname } = useRouter();
+  const isRoot = pathname === "/";
+
+  const header = isRoot ? (
+    <h1 className="mb-8">
+      <Link href="/">
+        <a className="text-6xl font-black text-black no-underline">
+          Next.Js Starter Blog
+        </a>
+      </Link>
+    </h1>
+  ) : (
+    <h1 className="mb-2">
+      <Link href="/">
+        <a className="text-2xl font-black text-black no-underline">
+          Next.Js Starter Blog
+        </a>
+      </Link>
+    </h1>
+  );
+
+  return (
+    <div className="max-w-screen-sm px-4 py-8 mx-auto">
+      <header>{header}</header>
+      <main>{children}</main>
+      <footer>
+        © {new Date().getFullYear()}, Built with{" "}
+        <a href="https://nextjs.org/">Next.js</a> &#128293;
+      </footer>
+    </div>
+  );
+}
+```
+####
 
 ilwindcss/utilities";
 ```
