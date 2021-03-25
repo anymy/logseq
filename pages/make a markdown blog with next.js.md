@@ -53,7 +53,95 @@ We suggest that you begin by typing:
 ```
 ## Run it
 ### `yarn dev`
-###
+### 
+```shell
+yarn run v1.22.10
+$ next dev
+ready - started server on 0.0.0.0:3000, url: http://localhost:3000
+event - compiled successfully
+event - build page: /
+wait  - compiling...
+event - compiled successfully
+```
+### ![image.png](../assets/pages_make a markdown blog with next.js_1616684421475_0.png){:height 351, :width 604}
+## The application will be based on *gray-matter* to parse frontmatter, *react-markdown* for converting markdown to HTML and tailwindcss to style it.
+## Adding these modules
+### Adding react-markdown
+#### `yarn add react-markdown`
+#### 
+```shell
+yarn add v1.22.10
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+warning " > react-markdown@5.0.3" has unmet peer dependency "@types/react@>=16".
+[4/4] 🔨  Building fresh packages...
+success Saved lockfile.
+success Saved 28 new dependencies.
+info Direct dependencies
+└─ react-markdown@5.0.3
+info All dependencies
+...
+✨  Done in 5.25s.
+```
+### Adding *gray-matter*
+#### `yarn add -D gray-matter`
+#### 
+```shell
+yarn add v1.22.10
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+[4/4] 🔨  Building fresh packages...
+success Saved lockfile.
+success Saved 10 new dependencies.
+info Direct dependencies
+└─ gray-matter@4.0.2
+info All dependencies
+...
+✨  Done in 3.25s.
+```
+### Adding *tailwindcss* and co
+#### `yarn add -D tailwindcss postcss postcss-import autoprefixer`
+####
+```shell
+yarn add v1.22.10
+[1/4] 🔍  Resolving packages...
+[2/4] 🚚  Fetching packages...
+[3/4] 🔗  Linking dependencies...
+[4/4] 🔨  Building fresh packages...
+success Saved lockfile.
+success Saved 53 new dependencies.
+info Direct dependencies
+├─ autoprefixer@10.2.5
+├─ postcss-import@14.0.0
+├─ postcss@8.2.8
+└─ tailwindcss@2.0.4
+info All dependencies
+...
+✨  Done in 6.69s.
+```
+### Configure *tailwindcss*
+#### `npx tailwindcss init -p`
+#### 
+```shell
+   tailwindcss 2.0.4
+  
+   ✅ Created Tailwind config file: tailwind.config.js
+   ✅ Created PostCSS config file: postcss.config.js
+```
+#### create a stylesheet *styles/tailwind.css*
+####
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+#### add the stylesheet to *pages/_app.js* and remove the default sheets
+#### 
+```javascript
+import @styles/tailwind.css
+```
 ---
 title: make a markdown blog with
 ### Create a next.js project:
