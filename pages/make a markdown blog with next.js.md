@@ -313,336 +313,101 @@ info All dependencies
 ├─ constants-browserify@1.0.0
 ├─ convert-source-map@1.7.0
 ├─ core-util-is@1.0.2
-├─ create-ecdh@4.0.4
-├─ create-hmac@1.1.7
-├─ crypto-browserify@3.12.0
-├─ css.escape@1.5.1
-├─ cssnano-preset-simple@1.2.2
-├─ cssnano-simple@1.2.2
-├─ data-uri-to-buffer@3.0.1
-├─ debug@2.6.9
-├─ depd@1.1.2
-├─ des.js@1.0.1
-├─ diffie-hellman@5.0.3
-├─ domain-browser@1.2.0
-├─ electron-to-chromium@1.3.699
-├─ emojis-list@2.1.0
-├─ escalade@3.1.1
-├─ escape-string-regexp@1.0.5
-├─ esutils@2.0.3
-├─ etag@1.8.1
-├─ events@3.3.0
-├─ fill-range@7.0.1
-├─ find-cache-dir@3.3.1
-├─ find-up@4.1.0
-├─ fsevents@2.3.2
-├─ get-orientation@1.1.2
-├─ glob-parent@5.1.2
-├─ glob-to-regexp@0.4.1
-├─ graceful-fs@4.2.6
-├─ hash.js@1.1.7
-├─ he@1.2.0
-├─ hmac-drbg@1.0.1
-├─ http-errors@1.7.3
-├─ https-browserify@1.0.0
-├─ iconv-lite@0.4.24
-├─ is-binary-path@2.1.0
-├─ is-extglob@2.1.1
-├─ is-glob@4.0.1
-├─ is-number@7.0.0
-├─ isarray@1.0.0
-├─ isobject@2.1.0
-├─ jest-worker@24.9.0
-├─ js-tokens@4.0.0
-├─ json5@1.0.1
-├─ line-column@1.0.2
-├─ loader-utils@1.2.3
-├─ locate-path@5.0.0
-├─ lodash.sortby@4.7.0
-├─ lodash@4.17.21
-├─ loose-envify@1.4.0
-├─ make-dir@3.1.0
-├─ merge-stream@2.0.0
-├─ miller-rabin@4.0.1
-├─ minimist@1.2.5
-├─ ms@2.0.0
-├─ nanoid@3.1.22
-├─ native-url@0.3.4
-├─ next@10.0.9
-├─ node-fetch@2.6.1
-├─ node-html-parser@1.4.9
-├─ node-libs-browser@2.2.1
-├─ node-releases@1.1.71
-├─ normalize-path@3.0.0
-├─ os-browserify@0.3.0
-├─ p-limit@3.1.0
-├─ p-locate@4.1.0
-├─ p-try@2.2.0
-├─ pako@1.0.11
-├─ parse-asn1@5.1.6
-├─ path-browserify@1.0.1
-├─ path-exists@4.0.0
-├─ picomatch@2.2.2
-├─ pkg-dir@4.2.0
-├─ platform@1.3.6
-├─ pnp-webpack-plugin@1.6.4
-├─ process-n
-##### file *styles/tailwind.css*
-###### 
+├─ cr
 ```javascript
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-```
-##### file *pages/_app.js*
-###### 
-```javascript
-import "../styles/tailwind.css";
-```
-#### run it
-##### ![image.png](../assets/pages_make a markdown blog with next.js_1616630022845_0.png){:height 150, :width 560}
-##### The styling changed!
-### Blog logic
-#### Blog posts in *content/posts*
-##### *first-post.md*
-###### 
-```markdown
----
-title: First post
-description: The first post is the most memorable one.
-date: 2020-04-16
----
-
-# h1
-## h2
-### h3
-
-Normal text
-```
-#### index.js with logic to show posts:
-#####
-```javascript
+import React from "react";
 import fs from "fs";
+import path from "path";
 import matter from "gray-matter";
+import ReactMarkdown from "react-markdown/with-html";
 
-export default function Home({ posts }) {
+export default function Post({ content, frontmatter }) {
   return (
-    <div>
-       {posts.map(({ frontmatter: { title, description, date } }) => (
-        <article key={title}>
-          <header>
-            <h3>{title}</h3>
-            <span>{date}</span>
-          </header>
-          <section>
-            <p>{description}</p>
-          </section>
-        </article>
-      ))}
-    </div>
+    <Layout>
+      <article></article>
+    </Layout>
   );
 }
 
-export async function getStaticProps() {
-  const files = fs.readdirSync(`${process.cwd()}/content/posts`);
+export async function getStaticPaths() {
+  const files = fs.readdirSync("content/posts");
 
-  const posts = files.map((filename) => {
-    const markdownWithMetadata = fs
-      .readFileSync(`content/posts/${filename}`)
-      .toString();
-
-    const { data } = matter(markdownWithMetadata);
-
-    // Convert post date to format: Month day, Year
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const formattedDate = data.date.toLocaleDateString("en-US", options);
-
-    const frontmatter = {
-      ...data,
-      date: formattedDate,
-    };
-
-    return {
+  const paths = files.map((filename) => ({
+    params: {
       slug: filename.replace(".md", ""),
-      frontmatter,
-    };
-  });
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params: { slug } }) {
+   const markdownWithMetadata = fs
+    .readFileSync(path.join("content/posts", slug + ".md"))
+    .toString();
+
+  const { data, content } = matter(markdownWithMetadata);
+
+  // Convert post date to format: Month day, Year
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = data.date.toLocaleDateString("en-US", options);
+
+  const frontmatter = {
+    ...data,
+    date: formattedDate,
+  };
 
   return {
     props: {
-      posts,
+      content: `# ${data.title}\n${content}`,
+      frontmatter,
     },
   };
 }
- ```
-### Styling
-#### Layout in *components/layout.js*:
-#####
-```javascript
-import Link from "next/link";
-import { useRouter } from "next/router";
 
-export default function Layout({ children }) {
-  const { pathname } = useRouter();
-  const isRoot = pathname === "/";
-
-  const header = isRoot ? (
-    <h1 className="mb-8">
-      <Link href="/">
-        <a className="text-6xl font-black text-black no-underline">
-          Next.Js Starter Blog
-        </a>
-      </Link>
-    </h1>
-  ) : (
-    <h1 className="mb-2">
-      <Link href="/">
-        <a className="text-2xl font-black text-black no-underline">
-          Next.Js Starter Blog
-        </a>
-      </Link>
-    </h1>
-  );
-
-  return (
-    <div className="max-w-screen-sm px-4 py-8 mx-auto">
-      <header>{header}</header>
-      <main>{children}</main>
-      <footer>
-        © {new Date().getFullYear()}, Built with{" "}
-        <a href="https://nextjs.org/">Next.js</a> &#128293;
-      </footer>
-    </div>
-  );
-}
-```
-#### add layout to *pages/index.js*
-##### 
-```javascript
-...
-import Layout from "../components/layout";
-
-export default function Home({ posts }) {
+export default function Post({ content, frontmatter }) {
   return (
     <Layout>
-       {posts.map(({ frontmatter: { title, description, date } }) => (
-        <article key={title}>
-          ...
-        </article>
-      ))}
+      <article>
+        <ReactMarkdown escapeHtml={false} source={content} />
+      </article>
     </Layout>
   );
 }
 ```
-##### ![image.png](../assets/pages_make a markdown blog with next.js_1616663713368_0.png){:width 400}
-####
+arkdownWithMetadata);
 
-ilwindcss/utilities";
+  // Convert post date to format: Month day, Year
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  const formattedDate = data.date.toLocaleDateString("en-US", options);
+
+  const frontmatter = {
+    ...data,
+    date: formattedDate,
+  };
+
+  return {
+    props: {
+      content: `# ${data.title}\n${content}`,
+      frontmatter,
+    },
+  };
+}
+
 ```
+3.2
+├─ get-orienta
 ```javascript
+import React from "react";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import ReactMarkdown from "react-markdown/with-html";
 
 ```
-ing react, react-dom, and next using yarn...
-
-yarn add v1.22.10
-info No lockfile found.
-[1/4] 🔍  Resolving packages...
-[2/4] 🚚  Fetching packages...
-[3/4] 🔗  Linking dependencies...
-[4/4] 🔨  Building fresh packages...
-success Saved lockfile.
-success Saved 172 new dependencies.
-info Direct dependencies
-├─ next@10.0.9
-├─ react-dom@17.0.2
-└─ react@17.0.2
-info All dependencies
-├─ @babel/code-frame@7.12.11
-├─ @babel/helper-validator-identifier@7.12.11
-├─ @babel/highlight@7.13.10
-├─ @babel/runtime@7.12.5
-├─ @babel/types@7.8.3
-├─ @hapi/accept@5.0.1
-├─ @hapi/boom@9.1.2
-├─ @next/env@10.0.9
-├─ @next/polyfill-module@10.0.9
-├─ @next/react-dev-overlay@10.0.9
-├─ @next/react-refresh-utils@10.0.9
-├─ @opentelemetry/api@0.14.0
-├─ @opentelemetry/context-base@0.14.0
-├─ anser@1.4.9
-├─ ansi-regex@5.0.0
-├─ ansi-styles@3.2.1
-├─ anymatch@3.1.1
-├─ asn1.js@5.4.1
-├─ assert@1.5.0
-├─ ast-types@0.13.2
-├─ babel-plugin-syntax-jsx@6.18.0
-├─ big.js@5.2.2
-├─ binary-extensions@2.2.0
-├─ braces@3.0.2
-├─ brorand@1.1.0
-├─ browserify-aes@1.2.0
-├─ browserify-cipher@1.0.1
-├─ browserify-des@1.0.2
-├─ browserify-rsa@4.1.0
-├─ browserify-sign@4.2.1
-├─ browserify-zlib@0.2.0
-├─ browserslist@4.16.1
-├─ buffer-xor@1.0.3
-├─ buffer@5.6.0
-├─ builtin-status-codes@3.0.0
-├─ bytes@3.1.0
-├─ chalk@2.4.2
-├─ chokidar@3.5.1
-├─ classnames@2.2.6
-├─ color-convert@1.9.3
-├─ color-name@1.1.3
-├─ commondir@1.0.1
-├─ console-browserify@1.2.0
-├─ constants-browserify@1.0.0
-├─ convert-source-map@1.7.0
-├─ core-util-is@1.0.2
-├─ create-ecdh@4.0.4
-├─ create-hmac@1.1.7
-├─ crypto-browserify@3.12.0
-├─ css.escape@1.5.1
-├─ cssnano-preset-simple@1.2.2
-├─ cssnano-simple@1.2.2
-├─ data-uri-to-buffer@3.0.1
-├─ debug@2.6.9
-├─ depd@1.1.2
-├─ des.js@1.0.1
-├─ diffie-hellman@5.0.3
-├─ domain-browser@1.2.0
-├─ electron-to-chromium@1.3.699
-├─ emojis-list@2.1.0
-├─ escalade@3.1.1
-├─ escape-string-regexp@1.0.5
-├─ esutils@2.0.3
-├─ etag@1.8.1
-├─ events@3.3.0
-├─ fill-range@7.0.1
-├─ find-cache-dir@3.3.1
-├─ find-up@4.1.0
-├─ fsevents@2.3.2
-├─ get-orientation@1.1.2
-├─ glob-parent@5.1.2
-├─ glob-to-regexp@0.4.1
-├─ graceful-fs@4.2.6
-├─ hash.js@1.1.7
-├─ he@1.2.0
-├─ hmac-drbg@1.0.1
-├─ http-errors@1.7.3
-├─ https-browserify@1.0.0
-├─ iconv-lite@0.4.24
-├─ is-binary-path@2.1.0
-├─ is-extglob@2.1.1
-├─ is-glob@4.0.1
-├─ is-number@7.0.0
-├─ isarray@1.0.0
-├─ isobject@2.1.0
-├─ jest-worker@24.9.0
 ├─ js-tokens@4.0.0
 ├─ json5@1.0.1
 ├─ line-column@1.0.2
