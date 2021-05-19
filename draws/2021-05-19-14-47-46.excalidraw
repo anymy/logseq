@@ -1,10 +1,1 @@
-{
-  "type": "excalidraw",
-  "version": 2,
-  "source": "https://logseq.com",
-  "elements": [],
-  "appState": {
-    "viewBackgroundColor": "#FFF",
-    "gridSize": null
-  }
-}
+{"type":"excalidraw","version":2,"source":"https://logseq.com","elements":[{"id":"Eia4y1EO_kP2aXg9oM95E","type":"rectangle","x":68.5,"y":163,"width":98,"height":52,"angle":0,"strokeColor":"#000000","backgroundColor":"transparent","fillStyle":"hachure","strokeWidth":1,"strokeStyle":"solid","roughness":1,"opacity":100,"groupIds":[],"strokeSharpness":"sharp","seed":1034449134,"version":33,"versionNonce":87151854,"isDeleted":false,"boundElementIds":null},{"id":"Jl4aFdzc4mkcyBNiNfjj7","type":"ellipse","x":369.5,"y":161,"width":66,"height":59,"angle":0,"strokeColor":"#000000","backgroundColor":"transparent","fillStyle":"hachure","strokeWidth":1,"strokeStyle":"solid","roughness":1,"opacity":100,"groupIds":[],"strokeSharpness":"sharp","seed":2134161650,"version":117,"versionNonce":838805106,"isDeleted":false,"boundElementIds":null},{"id":"Lx88ZwsiX_9M--YzTEX3_","type":"text","x":372.5,"y":264,"width":5,"height":24,"angle":0,"strokeColor":"#000000","backgroundColor":"transparent","fillStyle":"hachure","strokeWidth":1,"strokeStyle":"solid","roughness":1,"opacity":100,"groupIds":[],"strokeSharpness":"sharp","seed":2116799470,"version":5,"versionNonce":2027956334,"isDeleted":true,"boundElementIds":null,"text":"","fontSize":20,"fontFamily":1,"textAlign":"left","verticalAlign":"top","baseline":18}],"appState":{"gridSize":null,"viewBackgroundColor":"#FFF"}}
